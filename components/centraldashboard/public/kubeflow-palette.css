@@ -1,7 +1,10 @@
 body {
-    --accent-color: #007dfc;
-    --kubeflow-color: #003c75;
-    --primary-background-color: #2196f3;
+    /* --accent-color: #007dfc; */
+    --accent-color: #E01B84;
+    /* --kubeflow-color: #003c75; */
+    --kubeflow-color: #E01B84;
+    /* --primary-background-color: #2196f3; */
+    --primary-background-color: #E01B84;
     --sidebar-color: #f8fafb;
     --border-color: #f4f4f6;
 }
