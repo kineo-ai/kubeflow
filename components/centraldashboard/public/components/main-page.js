@@ -24,7 +24,7 @@ import '@polymer/neon-animation/neon-animated-pages.js';
 import '@polymer/neon-animation/animations/fade-in-animation.js';
 import '@polymer/neon-animation/animations/fade-out-animation.js';
 
-import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
+import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 
 import css from './main-page.css';
 import template from './main-page.pug';
@@ -39,14 +39,14 @@ import './manage-users-view.js';
 import './resources/kubeflow-icons.js';
 import './iframe-container.js';
 import utilitiesMixin from './utilities-mixin.js';
-import {IFRAME_LINK_PREFIX} from './iframe-link.js';
+import { IFRAME_LINK_PREFIX } from './iframe-link.js';
 
 /**
  * Entry point for application UI.
  */
 export class MainPage extends utilitiesMixin(PolymerElement) {
     static get template() {
-        const vars = {logo};
+        const vars = { logo };
         return html([
             `<style>${css.toString()}</style>${template(vars)}`]);
     }
@@ -61,7 +61,7 @@ export class MainPage extends utilitiesMixin(PolymerElement) {
                 value: null, // Necessary to preserve queryString from load
             },
             iframeSrc: String,
-            iframePage: {type: String, observer: '_iframePageChanged'},
+            iframePage: { type: String, observer: '_iframePageChanged' },
             documentationItems: {
                 type: Array,
                 value: [],
@@ -79,18 +79,18 @@ export class MainPage extends utilitiesMixin(PolymerElement) {
                 type: Array,
                 value: [],
             },
-            errorText: {type: String, value: ''},
-            buildVersion: {type: String, value: BUILD_VERSION},
-            dashVersion: {type: String, value: VERSION},
+            errorText: { type: String, value: '' },
+            buildVersion: { type: String, value: BUILD_VERSION },
+            dashVersion: { type: String, value: VERSION },
             platformInfo: Object,
-            inIframe: {type: Boolean, value: false, readOnly: true},
-            hideTabs: {type: Boolean, value: false, readOnly: true},
-            hideSidebar: {type: Boolean, value: false, readOnly: true},
-            persistent: {type: Boolean, value: true, readOnly: true},
-            hideNamespaces: {type: Boolean, value: false, readOnly: true},
-            allNamespaces: {type: Boolean, value: false, readOnly: true},
-            notFoundInIframe: {type: Boolean, value: false, readOnly: true},
-            registrationFlow: {type: Boolean, value: false, readOnly: true},
+            inIframe: { type: Boolean, value: false, readOnly: true },
+            hideTabs: { type: Boolean, value: false, readOnly: true },
+            hideSidebar: { type: Boolean, value: false, readOnly: true },
+            persistent: { type: Boolean, value: true, readOnly: true },
+            hideNamespaces: { type: Boolean, value: false, readOnly: true },
+            allNamespaces: { type: Boolean, value: false, readOnly: true },
+            notFoundInIframe: { type: Boolean, value: false, readOnly: true },
+            registrationFlow: { type: Boolean, value: false, readOnly: true },
             workgroupStatusHasLoaded: {
                 type: Boolean,
                 value: false,
@@ -99,8 +99,8 @@ export class MainPage extends utilitiesMixin(PolymerElement) {
             namespaces: Array,
             namespace: String,
             user: String,
-            isClusterAdmin: {type: Boolean, value: false},
-            isolationMode: {type: String, value: 'undecided', readOnly: true},
+            isClusterAdmin: { type: Boolean, value: false },
+            isolationMode: { type: String, value: 'undecided', readOnly: true },
             _shouldFetchEnv: {
                 type: Boolean,
                 // eslint-disable-next-line max-len
@@ -157,7 +157,7 @@ export class MainPage extends utilitiesMixin(PolymerElement) {
      * @param {Event} ev AJAX-response
      */
     _onHasDashboardLinksError(ev) {
-        const error = ((ev.detail.request||{}).response||{}).error ||
+        const error = ((ev.detail.request || {}).response || {}).error ||
             ev.detail.error;
         this.showError(error);
         return;
@@ -185,7 +185,7 @@ export class MainPage extends utilitiesMixin(PolymerElement) {
      * @param {Event} ev AJAX-response
      */
     _onHasWorkgroupError(ev) {
-        const error = ((ev.detail.request||{}).response||{}).error ||
+        const error = ((ev.detail.request || {}).response || {}).error ||
             ev.detail.error;
         this.showError(error);
         return;
@@ -196,8 +196,8 @@ export class MainPage extends utilitiesMixin(PolymerElement) {
      * @param {Event} ev AJAX-response
      */
     _onHasWorkgroupResponse(ev) {
-        const {user, hasWorkgroup, hasAuth,
-            registrationFlowAllowed} = ev.detail.response;
+        const { user, hasWorkgroup, hasAuth,
+            registrationFlowAllowed } = ev.detail.response;
         this._setIsolationMode(hasAuth ? 'multi-user' : 'single-user');
         if (registrationFlowAllowed && hasAuth && !hasWorkgroup) {
             this.user = user;
@@ -235,41 +235,41 @@ export class MainPage extends utilitiesMixin(PolymerElement) {
         let hideSidebar = false;
 
         switch (newPage) {
-        case 'logout':
-            window.top.location.href = '/logout';
-            break;
-        case 'activity':
-            this.page = 'activity';
-            hideTabs = false;
-            this._setActiveLink(this.$.home);
-            break;
-        case IFRAME_LINK_PREFIX:
-            this.page = 'iframe';
-            isIframe = true;
-            hideNamespaces = false;
-            this._setActiveMenuLink(path, hashPath);
-            this._setIframeSrc();
-            break;
-        case 'manage-users':
-            this.page = 'manage-users';
-            hideTabs = true;
-            allNamespaces = true;
-            hideSidebar = false;
-            // need to use the shadowRoot selector instead of this.$ because
-            // this.$ does not contain dynamically created DOM nodes
-            this._setActiveLink(this.shadowRoot.querySelector('#contributors'));
-            break;
-        case '':
-            this.page = 'dashboard';
-            hideTabs = false;
-            this._setActiveLink(this.$.home);
-            break;
-        default:
-            this.page = 'not_found';
-            // Handles case when an iframed page requests an invalid route
-            if (this._isInsideOfIframe()) {
-                notFoundInIframe = true;
-            }
+            case 'logout':
+                window.top.location.href = '/logout';
+                break;
+            case 'activity':
+                this.page = 'activity';
+                hideTabs = false;
+                this._setActiveLink(this.$.home);
+                break;
+            case IFRAME_LINK_PREFIX:
+                this.page = 'iframe';
+                isIframe = true;
+                hideNamespaces = false;
+                this._setActiveMenuLink(path, hashPath);
+                this._setIframeSrc();
+                break;
+            case 'manage-users':
+                this.page = 'manage-users';
+                hideTabs = true;
+                allNamespaces = true;
+                hideSidebar = false;
+                // need to use the shadowRoot selector instead of this.$ because
+                // this.$ does not contain dynamically created DOM nodes
+                this._setActiveLink(this.shadowRoot.querySelector('#contributors'));
+                break;
+            case '':
+                this.page = 'dashboard';
+                hideTabs = false;
+                this._setActiveLink(this.$.home);
+                break;
+            default:
+                this.page = 'not_found';
+                // Handles case when an iframed page requests an invalid route
+                if (this._isInsideOfIframe()) {
+                    notFoundInIframe = true;
+                }
         }
         this._setNotFoundInIframe(notFoundInIframe);
         this._setHideTabs(hideTabs);
@@ -338,7 +338,8 @@ export class MainPage extends utilitiesMixin(PolymerElement) {
             }
         }
         window.history.replaceState(null, null, l.toString());
-        this.set('routeHash.path', window.location.hash.substr(1));
+        this.set('routeHash.path',
+            window.decodeURIComponent(window.location.hash.substr(1)));
     }
 
     /**
@@ -440,7 +441,7 @@ export class MainPage extends utilitiesMixin(PolymerElement) {
         const {
             platform, user, namespaces, isClusterAdmin,
         } = responseEvent.detail.response;
-        Object.assign(this, {user, isClusterAdmin});
+        Object.assign(this, { user, isClusterAdmin });
         this.namespaces = namespaces;
         if (this.namespaces.length) {
             this._setRegistrationFlow(false);

@@ -7,7 +7,7 @@ For more details sees the actual [README](./README.md)
 * `npm run dev`
 
 > **Note**
-> The connection with a running cluster works pretty limited for now as we are note authenticated as a actual user.
+> The connection with a running cluster works pretty limited for now as we are not authenticated as a actual user.
 
 To run the dashboard connected with a running cluster: `kubectl proxy --port=8083`
 

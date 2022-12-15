@@ -1,9 +1,9 @@
 import '@polymer/test-fixture/test-fixture';
 import 'jasmine-ajax';
-import {flush} from '@polymer/polymer/lib/utils/flush.js';
+import { flush } from '@polymer/polymer/lib/utils/flush.js';
 
 import './main-page';
-import {mockRequest} from '../ajax_test_helper';
+import { mockRequest } from '../ajax_test_helper';
 
 const FIXTURE_ID = 'main-page-fixture';
 const MAIN_PAGE_SELECTOR_ID = 'test-main-page';
@@ -255,13 +255,14 @@ describe('Main Page', () => {
         const hash = '#/hash/route/fragments';
         window.location.hash = hash;
         mainPage.set('queryParams.ns', 'test');
-        mainPage.set('queryParams.foo', 'bar');
+        mainPage.set('queryParams.foo', '["bar"]');
         mainPage.subRouteData.path = '/pipeline/';
         mainPage._routePageChanged('_');
         flush();
 
-        expect(mainPage.iframeSrc).toMatch(
-            new RegExp(`${window.location.origin}/pipeline/?.*foo=bar${hash}`));
+        expect(mainPage.iframeSrc).toMatch(new RegExp(
+            `${window.location.origin}/pipeline/?.*foo=%5B%22bar%22%5D${hash}`
+        ));
     });
 
     it('Sets iframeSrc to about:blank when user navigates to non-iframe page',
@@ -340,9 +341,9 @@ describe('Main Page', () => {
             mainPage.menuLinks = MENU_LINKS;
             flush();
             mainPage.set('queryParams.ns', 'test');
-            expect(mainPage._buildHref('/myapp/{ns}', {ns: 'test'})).toBe(
-                   '/myapp/test?ns=test');
-       })
+            expect(mainPage._buildHref('/myapp/{ns}', { ns: 'test' })).toBe(
+                '/myapp/test?ns=test');
+        })
 
     it('Sets active menu item from namespaced URL',
         () => {
@@ -354,8 +355,8 @@ describe('Main Page', () => {
             const activeMenuItem = getSelectedMenuItem();
             expect(activeMenuItem.length).toBe(1);
             expect(activeMenuItem[0].parentElement.href).toBe(
-                   '/myapp/test?ns=test');
-       });
+                '/myapp/test?ns=test');
+        });
 
     it('Update namespaced item along with namespace selection',
         () => {
@@ -368,14 +369,14 @@ describe('Main Page', () => {
             let activeMenuItem = getSelectedMenuItem();
             expect(activeMenuItem.length).toBe(1);
             expect(activeMenuItem[0].parentElement.href).toBe(
-                   '/myapp/test?ns=test');
+                '/myapp/test?ns=test');
             expect(mainPage.subRouteData.path).toBe('/myapp/test/');
 
             mainPage.set('queryParams.ns', 'other-namespace');
             activeMenuItem = getSelectedMenuItem();
             expect(activeMenuItem.length).toBe(1);
             expect(activeMenuItem[0].parentElement.href).toBe(
-                   '/myapp/other-namespace?ns=other-namespace');
+                '/myapp/other-namespace?ns=other-namespace');
             expect(mainPage.subRouteData.path).toBe('/myapp/other-namespace');
         });
 });
