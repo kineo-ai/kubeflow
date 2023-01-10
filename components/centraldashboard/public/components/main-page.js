@@ -158,7 +158,7 @@ export class MainPage extends utilitiesMixin(PolymerElement) {
      * @param {Event} ev AJAX-response
      */
     _onHasDashboardLinksError(ev) {
-        const error = ((ev.detail.request||{}).response||{}).error ||
+        const error = ((ev.detail.request || {}).response || {}).error ||
             ev.detail.error;
         this.showError(error);
         return;
@@ -186,7 +186,7 @@ export class MainPage extends utilitiesMixin(PolymerElement) {
      * @param {Event} ev AJAX-response
      */
     _onHasWorkgroupError(ev) {
-        const error = ((ev.detail.request||{}).response||{}).error ||
+        const error = ((ev.detail.request || {}).response || {}).error ||
             ev.detail.error;
         this.showError(error);
         return;
@@ -272,7 +272,7 @@ export class MainPage extends utilitiesMixin(PolymerElement) {
                 hideSidebar = true;
             }
             if (path && path.includes('{ns}')) {
-                this.page = 'namespace_needed'
+                this.page = 'namespace_needed';
             } else {
                 this.page = 'not_found';
             }
@@ -345,7 +345,8 @@ export class MainPage extends utilitiesMixin(PolymerElement) {
             }
         }
         window.history.replaceState(null, null, l.toString());
-        this.set('routeHash.path', window.location.hash.substr(1));
+        this.set('routeHash.path'
+            , window.decodeURIComponent(window.location.hash.substr(1)));
     }
 
     /**
