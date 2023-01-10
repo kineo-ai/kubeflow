@@ -1,9 +1,9 @@
 import '@polymer/test-fixture/test-fixture';
 import 'jasmine-ajax';
-import { flush } from '@polymer/polymer/lib/utils/flush.js';
+import {flush} from '@polymer/polymer/lib/utils/flush.js';
 
 import './main-page';
-import { mockRequest } from '../ajax_test_helper';
+import {mockRequest} from '../ajax_test_helper';
 
 const FIXTURE_ID = 'main-page-fixture';
 const MAIN_PAGE_SELECTOR_ID = 'test-main-page';
@@ -49,7 +49,7 @@ const MENU_LINKS = [
     {
         link: '/myapp/{ns}',
         text: 'MyApp',
-    }
+    },
 ];
 
 describe('Main Page', () => {
@@ -159,18 +159,17 @@ describe('Main Page', () => {
 
     it('Sets view state when the namespace is not specified for ' +
         'a namespaced item', () => {
-            spyOn(mainPage, '_isInsideOfIframe').and.returnValue(true);
-            mainPage._routePageChanged('iframe', '/myapp/{ns}');
-            flush();
+        spyOn(mainPage, '_isInsideOfIframe').and.returnValue(true);
+        mainPage._routePageChanged('iframe', '/myapp/{ns}');
+        flush();
 
-            expect(mainPage.page).toBe('namespace_needed');
-            expect(mainPage.notFoundInIframe).toBe(true);
-            expect(mainPage.shadowRoot.getElementById('ViewTabs')
-                .hasAttribute('hidden')).toBe(true);
-            expect(mainPage.shadowRoot.getElementById('ViewTabs')
-                .hasAttribute('hidden')).toBe(true);
-
-        });
+        expect(mainPage.page).toBe('namespace_needed');
+        expect(mainPage.notFoundInIframe).toBe(true);
+        expect(mainPage.shadowRoot.getElementById('ViewTabs')
+            .hasAttribute('hidden')).toBe(true);
+        expect(mainPage.shadowRoot.getElementById('ViewTabs')
+            .hasAttribute('hidden')).toBe(true);
+    });
 
     it('Appends query string when building links', () => {
         const sidebarLinkSelector = '#MainDrawer iron-selector iframe-link';
@@ -275,8 +274,9 @@ describe('Main Page', () => {
         mainPage._routePageChanged('_');
         flush();
 
-        expect(mainPage.iframeSrc).toMatch(
-            new RegExp(`${window.location.origin}/pipeline/?.*foo=bar${hash}`));
+        expect(mainPage.iframeSrc).toMatch(new RegExp(
+            `${window.location.origin}/pipeline/?.*foo=%5B%22bar%22%5D${hash}`
+        ));
     });
 
     it('Sets iframeSrc to about:blank when user navigates to non-iframe page',
@@ -355,9 +355,9 @@ describe('Main Page', () => {
             mainPage.menuLinks = MENU_LINKS;
             flush();
             mainPage.set('queryParams.ns', 'test');
-            expect(mainPage._buildHref('/myapp/{ns}', { ns: 'test' })).toBe(
+            expect(mainPage._buildHref('/myapp/{ns}', {ns: 'test'})).toBe(
                 '/myapp/test?ns=test');
-        })
+        });
 
     it('Sets active menu item from namespaced URL',
         () => {
